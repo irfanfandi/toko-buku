@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const { model, Schema } = require('mongoose')
 
-const M_purchase_b = mongoose.model('M_purchase_b', {
+const Transaction = new Schema({
     id_purchase_a: {
         type: String,
         required: true,
@@ -16,9 +16,13 @@ const M_purchase_b = mongoose.model('M_purchase_b', {
         required: true,
         trim: true
     },
-    total_price: {
+    price: {
         type: Number,
         required: true,
+        trim: true
+    },
+    total_price: {
+        type: Number,
         trim: true
     },
     created_by: {
@@ -39,8 +43,13 @@ const M_purchase_b = mongoose.model('M_purchase_b', {
         default: Date.now,
         trim: true
     },
-
-
 })
 
+Transaction.pre('save', async function(next) {
+
+    this.total_price = this.qty * this.price
+    next()
+  })
+
+const M_purchase_b = model('M_purchase_b', Transaction)
 module.exports = M_purchase_b

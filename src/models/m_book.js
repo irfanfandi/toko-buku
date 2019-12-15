@@ -41,6 +41,11 @@ const M_book = mongoose.model('M_book', {
         required: true,
         trim: true
     },
+    Picture: {
+        type: String,
+        required: true,
+        trim: true
+    },
     created_by: {
         type: String,
         trim: true

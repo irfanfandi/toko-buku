@@ -1,6 +1,8 @@
 const express = require('express')
 const M_book = require('../models/M_book')
 const router = new express.Router()
+var mongoose = require('mongoose');
+var db = mongoose.connection;
 
 router.post('/books', async (req, res) => {
     const m_book = new M_book(req.body)
