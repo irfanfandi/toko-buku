@@ -3,9 +3,13 @@ const { model, Schema } = require('mongoose')
 const Transaction = new Schema({
     id_purchase_a: {
         type: String,
-        required: true,
         trim: true
     },
+	id_user : {
+		type: String,
+        required: true,
+        trim: true
+	},
     id_book: {
         type: String,
         required: true,
@@ -16,7 +20,7 @@ const Transaction = new Schema({
         required: true,
         trim: true
     },
-    price: {
+	price: {
         type: Number,
         required: true,
         trim: true
@@ -43,13 +47,20 @@ const Transaction = new Schema({
         default: Date.now,
         trim: true
     },
+
+
 })
 
 Transaction.pre('save', async function(next) {
 
     this.total_price = this.qty * this.price
     next()
-  })
+})
+Transaction.pre('update', async function(next) {
 
+    this.total_price = this.qty * this.price
+    next()
+})
+  
 const M_purchase_b = model('M_purchase_b', Transaction)
 module.exports = M_purchase_b

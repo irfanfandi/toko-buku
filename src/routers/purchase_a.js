@@ -22,6 +22,22 @@ router.get('/purchase_a', async (req, res) => {
     }
 })
 
+router.get('/purchase_a/:id_user', async (req, res) => {
+    const idUser = req.params.id_user
+
+    try {
+        const purchase = await M_purchase_a.find({id_user : `${idUser}`})
+
+        if (!purchase) {
+            return res.status(404).send()
+        }
+
+        res.send(purchase)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.get('/purchase_a/:id', async (req, res) => {
     const _id = req.params.id
 
@@ -37,6 +53,8 @@ router.get('/purchase_a/:id', async (req, res) => {
         res.status(500).send()
     }
 })
+
+
 
 router.put('/purchase_a/:id', async (req, res) => {
     const {id} = req.params;
